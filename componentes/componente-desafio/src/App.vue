@@ -10,17 +10,17 @@
 </template>
 
 <script>
-	import Footer from "./Footer";
-	import Carousel from "./Carousel"
-	import Toolbar from "./Toolbar";
-	import Menu from "./Menu";
+	import AppFooter from "./componentes/template/AppFooter";
+	import AppCarousel from "./componentes/widgets/AppCarousel"
+	import AppToolbar from "./componentes/template/AppToolbar";
+	import AppMenu from "./componentes/template/AppMenu";
 
 	export default {
 		components: {
-			'app-footer': Footer,
-			'app-carousel': Carousel,
-			'app-toolbar': Toolbar,
-			'app-menu': Menu
+			AppFooter,
+			AppCarousel,
+			AppToolbar,
+			AppMenu
 		}
 	}
 </script>
