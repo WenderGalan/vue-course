@@ -7,21 +7,22 @@
   >
     <v-card class="green darken-3 white--text">
       <v-card-title class="headline">
-        <strong>{{ stock.name }} <small>(Preço: {{ stock.price }})</small></strong>
+        <strong>{{ stock.name }} <small>(Preço: {{ stock.price | currency }})</small></strong>
       </v-card-title>
     </v-card>
     <v-card>
       <v-container fill-height>
         <v-text-field
+          :error="insufficientFunds || !Number.isInteger(quantity)"
           label="Quantidade"
           type="number"
           v-model.number="quantity"
         />
         <v-btn
-          :disabled="quantity <= 0 || !Number.isInteger(quantity)"
+          :disabled="insufficientFunds || quantity <= 0 || !Number.isInteger(quantity)"
           @click="buyStock"
           class="green darken-3 white--text"
-        >Comprar
+        >{{ insufficientFunds ? 'Insuficiente' : 'Comprar' }}
         </v-btn>
       </v-container>
     </v-card>
@@ -44,9 +45,17 @@ export default {
         stockPrice: this.stock.price,
         quantity: this.quantity
       }
-      // eslint-disable-next-line
-      console.log('~> ', order)
+      // Chama a action
+      this.$store.dispatch('buyStock', order)
       this.quantity = 0
+    }
+  },
+  computed: {
+    funds() {
+      return this.$store.getters.funds
+    },
+    insufficientFunds() {
+      return this.quantity * this.stock.price > this.funds
     }
   }
 }
